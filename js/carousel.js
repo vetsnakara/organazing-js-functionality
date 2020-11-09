@@ -1,7 +1,6 @@
 var Carousel = (function () {
-  var $items;
-  var position;
-  var maxPosition;
+  var $items, $content;
+  var position, maxPosition;
 
   function scrollLeft(evt) {
     evt.preventDefault();
@@ -27,12 +26,16 @@ var Carousel = (function () {
     $items.css({ left: -position + "px" });
   }
 
-  function init() {
-    var $content = $("[rel=js-carousel] > [rel=js-content]");
+  function loadProfile(event) {
+    var $item = $(event.target);
+    var id = $item.attr("rel").replace(/^.*(\d+)$/, "$1");
+
+    Details.loadProfile(id);
+  }
+
+  function initScroll() {
     var $left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
     var $right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
-
-    $items = $content.children("[rel=js-items]");
 
     var contentWidth = $content.width();
     var itemsWidth = $items.width();
@@ -42,6 +45,18 @@ var Carousel = (function () {
 
     $left.on("click", scrollLeft);
     $right.on("click", scrollRight);
+  }
+
+  function initLoadProfile() {
+    $content.on("click", '[rel^="js-"]', loadProfile);
+  }
+
+  function init() {
+    $content = $("[rel=js-carousel] > [rel=js-content]");
+    $items = $content.children("[rel=js-items]");
+
+    initScroll();
+    initLoadProfile();
   }
 
   return {
