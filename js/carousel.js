@@ -30,7 +30,7 @@ var Carousel = (function () {
     var $item = $(event.target);
     var id = $item.attr("rel").replace(/^.*(\d+)$/, "$1");
 
-    Details.loadProfile(id);
+    EVT.emit("profile-selected", id);
   }
 
   function initScroll() {

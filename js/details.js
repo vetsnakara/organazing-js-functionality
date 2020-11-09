@@ -14,6 +14,7 @@ var Details = (function () {
   }
 
   EVT.on("init", init);
+  EVT.on("profile-selected", loadProfile);
 
   return {
     loadProfile: loadProfile,
