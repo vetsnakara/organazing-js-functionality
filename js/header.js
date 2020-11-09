@@ -1,19 +1,29 @@
-$(function () {
-  var $modal = $('[rel="js-modal"]');
+var Header = (function () {
+  var $modal;
 
-  $('[rel="js-header"] > [rel="js-controls"]').on(
-    "click",
-    '[rel*="js-"]',
-    function (event) {
-      event.preventDefault();
+  function handleLinkClick(event) {
+    event.preventDefault();
 
-      var $link = $(event.target);
+    var href = $(event.target).attr("href");
 
-      var href = $link.attr("href");
+    $.ajax(href, { dataType: "text" }).then(function (content) {
+      $modal.html(content).show();
+    });
+  }
 
-      $.ajax(href, { dataType: "text" }).then(function (content) {
-        $modal.html(content).show();
-      });
-    }
-  );
-});
+  function init() {
+    $modal = $('[rel="js-modal"]');
+
+    $('[rel="js-header"] > [rel="js-controls"]').on(
+      "click",
+      '[rel*="js-"]',
+      handleLinkClick
+    );
+  }
+
+  return {
+    init: init,
+  };
+})();
+
+$(Header.init);

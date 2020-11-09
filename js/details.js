@@ -1,16 +1,27 @@
-$(function () {
-  var $carousel = $("[rel=js-carousel] > [rel=js-content]");
-  var $content = $("[rel=js-details]");
+var Details = (function () {
+  var $content;
 
-  $carousel.on("click", '[rel^="js-"]', function (event) {
+  function loadProfile(event) {
     var $item = $(event.target);
-    var rel = $item.attr("rel");
-    var id = rel.replace(/^.*(\d+)$/, "$1");
+    var id = $item.attr("rel").replace(/^.*(\d+)$/, "$1");
 
     $.ajax("details/" + id + ".html", { dataType: "text" }).then(function (
       content
     ) {
       $content.html(content);
     });
-  });
-});
+  }
+
+  function init() {
+    var $carousel = $("[rel=js-carousel] > [rel=js-content]");
+    $content = $("[rel=js-details]");
+
+    $carousel.on("click", '[rel^="js-"]', loadProfile);
+  }
+
+  return {
+    init: init,
+  };
+})();
+
+$(Details.init);
