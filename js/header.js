@@ -25,5 +25,3 @@ var Header = (function () {
     init: init,
   };
 })();
-
-$(Header.init);

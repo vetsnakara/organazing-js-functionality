@@ -63,5 +63,3 @@ var Carousel = (function () {
     init: init,
   };
 })();
-
-$(Carousel.init);

@@ -18,5 +18,3 @@ var Details = (function () {
     loadProfile: loadProfile,
   };
 })();
-
-$(Details.init);
