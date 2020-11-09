@@ -13,8 +13,9 @@ var Details = (function () {
     $content = $("[rel=js-details]");
   }
 
+  EVT.on("init", init);
+
   return {
-    init: init,
     loadProfile: loadProfile,
   };
 })();

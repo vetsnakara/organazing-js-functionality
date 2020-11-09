@@ -21,7 +21,5 @@ var Header = (function () {
     );
   }
 
-  return {
-    init: init,
-  };
+  EVT.on("init", init);
 })();

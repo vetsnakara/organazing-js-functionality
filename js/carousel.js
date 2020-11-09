@@ -59,7 +59,5 @@ var Carousel = (function () {
     initLoadProfile();
   }
 
-  return {
-    init: init,
-  };
+  EVT.on("init", init);
 })();
