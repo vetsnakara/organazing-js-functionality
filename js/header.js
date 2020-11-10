@@ -1,19 +1,24 @@
-$(function () {
-  var $modal = $('[rel="js-modal"]');
+(function () {
+  var $header;
 
-  $('[rel="js-header"] > [rel="js-controls"]').on(
-    "click",
-    '[rel*="js-"]',
-    function (event) {
+  /**
+   *
+   */
+  function init() {
+    $header = $("[data-content='header']");
+
+    $header.on("click", "[data-content='nav-link']", function (event) {
       event.preventDefault();
+      var href = $(event.target).attr("href");
 
-      var $link = $(event.target);
-
-      var href = $link.attr("href");
-
-      $.ajax(href, { dataType: "text" }).then(function (content) {
-        $modal.html(content).show();
+      $.ajax(href, { dataContent: "text" }).then(function (content) {
+        Modal.show({
+          title: "",
+          body: content,
+        });
       });
-    }
-  );
-});
+    });
+  }
+
+  EVT.on("init", init);
+})();

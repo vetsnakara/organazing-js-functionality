@@ -1,15 +1,32 @@
-$(document).ready(function(){
+(function () {
+  var $details;
 
-	var $items = $("[rel=js-carousel] > [rel=js-content] > [rel=js-items]");
-	var $content = $("[rel=js-details]");
+  /**
+   * init
+   */
+  function init() {
+    $details = $("[data-content='details']");
 
-	// on click of a carousel item, do an Ajax request for
-	// the "details/2.html" (or whatever) file for the person
-	// clicked, and load those contents into the `$content` div.
+    $details.on("click", "[data-content='control']", handleProfileChange);
 
-	// hint: you will probably want to use "event propagation"
-	// (aka "event delegation"), by attaching a single event
-	// handler the `$content` element rather than individual
-	// event handlers to each item in the carousel.
+    EVT.on("slide:selected", loadDetails);
+  }
 
-});
+  /**
+   * handleProfileChange
+   */
+  function handleProfileChange(event) {
+    var action = $(event.target).data("action");
+    EVT.emit("slide:select-" + action);
+  }
+
+  function loadDetails(index) {
+    var url = "/details/" + index + ".html";
+
+    $.ajax(url, { dataType: "text" }).then(function (content) {
+      $details.html(content);
+    });
+  }
+
+  EVT.on("init", init);
+})();

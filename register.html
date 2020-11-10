@@ -1,17 +1,25 @@
 <h1>Register</h1>
 
-<p>
-<label for="myname">name:</label> <input id="myname" rel="js-myname">
-</p>
-<p>
-<label for="myemail">email:</label> <input id="myemail" rel="js-myemail">
-</p>
-<p>
-<label for="mypw">password:</label> <input id="mypw" type="password" rel="js-mypw">
-</p>
-<p>
-<label for="confirmpw">confirm:</label> <input id="confirmpw" type="password" rel="js-confirmpw">
-</p>
-<p>
-<input type="button" value="register" rel="js-register">
-</p>
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+    />
+    <small id="emailHelp" class="form-text text-muted"
+      >We'll never share your email with anyone else.</small
+    >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" />
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
