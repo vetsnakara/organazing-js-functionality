@@ -1,5 +1,6 @@
 var Carousel = (function () {
   var $items, $content;
+  var $left, $right;
   var position, maxPosition;
 
   function scrollLeft(evt) {
@@ -8,7 +9,7 @@ var Carousel = (function () {
     evt.stopImmediatePropagation();
 
     if (position > 0) {
-      position = Math.max(0, position - 250);
+      position = Math.max(0, position - 135);
     }
 
     $items.css({ left: -position + "px" });
@@ -20,13 +21,13 @@ var Carousel = (function () {
     evt.stopImmediatePropagation();
 
     if (position < maxPosition) {
-      position = Math.min(maxPosition, position + 250);
+      position = Math.min(maxPosition, position + 135);
     }
 
     $items.css({ left: -position + "px" });
   }
 
-  function loadProfile(event) {
+  function handleItemSelect(event) {
     var $item = $(event.target);
     var id = $item.attr("rel").replace(/^.*(\d+)$/, "$1");
 
@@ -34,8 +35,8 @@ var Carousel = (function () {
   }
 
   function initScroll() {
-    var $left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
-    var $right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
+    $left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
+    $right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
 
     var contentWidth = $content.width();
     var itemsWidth = $items.width();
@@ -47,8 +48,13 @@ var Carousel = (function () {
     $right.on("click", scrollRight);
   }
 
-  function initLoadProfile() {
-    $content.on("click", '[rel^="js-"]', loadProfile);
+  function initItemSelect() {
+    $content.on("click", '[rel^="js-"]', handleItemSelect);
+  }
+
+  function highlightItem(id) {
+    $items.children().removeClass("active");
+    $("[rel='js-item-" + id + "']", $content).addClass("active");
   }
 
   function init() {
@@ -56,8 +62,18 @@ var Carousel = (function () {
     $items = $content.children("[rel=js-items]");
 
     initScroll();
-    initLoadProfile();
+    initItemSelect();
   }
 
   EVT.on("init", init);
+
+  EVT.on("profile-selected", highlightItem);
+
+  EVT.on("select-prev", function () {
+    $left.trigger("click");
+  });
+
+  EVT.on("select-next", function () {
+    $right.trigger("click");
+  });
 })();

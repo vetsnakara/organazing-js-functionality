@@ -1,13 +1,22 @@
 var Header = (function () {
   var $modal;
 
+  function closeModal() {
+    $modal.hide();
+  }
+
   function handleLinkClick(event) {
     event.preventDefault();
+
+    closeModal();
 
     var href = $(event.target).attr("href");
 
     $.ajax(href, { dataType: "text" }).then(function (content) {
-      $modal.html(content).show();
+      var $closeBtn = $("<button type='button'>close</button>");
+      $closeBtn.on("click", closeModal);
+
+      $modal.empty().append($closeBtn).append(content).show();
     });
   }
 
